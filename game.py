@@ -5,13 +5,14 @@ def create_cards():
                 'Queen', 'King']
     suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 
-    card_deck = {}
+    card_deck = []
 
     for suit in suits:
         for rank in ranks:
             card = f'{rank} of {suit}'
-            card_deck[card] = None
+            card_deck.append(card)
     return card_deck
+
 
 card_deck = create_cards()
 print(card_deck)
