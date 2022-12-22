@@ -63,8 +63,8 @@ def compare_cards(cards_to_compare:list):
     return winner
 
 
+if __name__ == '__main__':
+    card_deck = create_cards()
+    print(card_deck)
 
-card_deck = create_cards()
-print(card_deck)
-
-print(deal_cards(card_deck, 5, 5))
+    print(deal_cards(card_deck, 5, 5))

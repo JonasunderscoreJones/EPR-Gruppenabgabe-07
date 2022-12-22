@@ -1,30 +1,22 @@
 __author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 class BOT:
-    def __init__(self, name, cards):
+    def __init__(self, name, bot_number, cards):
         self.name = name
         self.cards = cards
         self.points = 0
         self.trumpf = False
         self.trumpf_color = None
+        self.bot_number = bot_number
 
-    def play_card(self, played_cards):
+    def play_card(self):
         '''
         Plays a card
-        input:
-            - played_cards: list
-                list of cards that have been played already
         output:
             - card: dict
                 card to play
         '''
-        if len(played_cards) == 0:
-            return self.cards.pop(0)
-        else:
-            for card in self.cards:
-                if card['suit'] == played_cards[0]['suit']:
-                    return self.cards.pop(self.cards.index(card))
-            return self.cards.pop(0)
+        return self.cards.pop(0)
     
     def add_points(self, points):
         '''
@@ -113,6 +105,24 @@ class BOT:
                 if the bot has trumpf
         '''
         return self.trumpf
+
+    def is_bot(self):
+        '''
+        Returns if the player is a bot
+        output:
+            - is_bot: bool
+                if the player is a bot
+        '''
+        return True
+    
+    def get_bot_number(self):
+        '''
+        Returns the bot number
+        output:
+            - bot_number: int
+                bot number
+        '''
+        return self.bot_number
 
     # Setter
 

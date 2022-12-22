@@ -1,4 +1,4 @@
-
+__author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 from os import get_terminal_size, name, system
 from sys import stdout
@@ -24,14 +24,14 @@ class Terminal:
 class Matrix:
     def __init__(self):
         self.columns, self.lines = Terminal.get_size()
-        self.clear(self)
+        self.clear()
 
     def clear(self):
         self.matrix = []
 
     def refresh(self):
         self.columns, self.lines = Terminal.get_size()
-        self.clear(self)
+        self.clear()
         for i in range(self.lines):
             self.matrix.append([])
             for j in range(self.columns):
@@ -40,51 +40,51 @@ class Matrix:
     def set_frame(self, x, y, dx, dy, rounded=True, double=False, title=None,
                   alligncenter=True):
         if double:
-            self.set(self, x, y, "╔")
-            self.set(self, x + dx, y, "╗")
-            self.set(self, x, y + dy, "╚")
-            self.set(self, x + dx, y + dy, "╝")
+            self.set( x, y, "╔")
+            self.set(x + dx, y, "╗")
+            self.set(x, y + dy, "╚")
+            self.set(x + dx, y + dy, "╝")
             for i in range(1, dx):
-                self.set(self, x + i, y, "═")
-                self.set(self, x + i, y + dy, "═")
+                self.set(x + i, y, "═")
+                self.set(x + i, y + dy, "═")
             for i in range(1, dy):
-                self.set(self, x, y + i, "║")
-                self.set(self, x + dx, y + i, "║")
+                self.set(x, y + i, "║")
+                self.set(x + dx, y + i, "║")
         else:
             if rounded:
-                self.set(self, x, y, "╭")
-                self.set(self, x + dx, y, "╮")
-                self.set(self, x, y + dy, "╰")
-                self.set(self, x + dx, y + dy, "╯")
+                self.set(x, y, "╭")
+                self.set(x + dx, y, "╮")
+                self.set(x, y + dy, "╰")
+                self.set(x + dx, y + dy, "╯")
             else:
-                self.set(self, x, y, "┌")
-                self.set(self, x + dx, y, "┐")
-                self.set(self, x, y + dy, "└")
-                self.set(self, x + dx, y + dy, "┘")
+                self.set(x, y, "┌")
+                self.set(x + dx, y, "┐")
+                self.set(x, y + dy, "└")
+                self.set(x + dx, y + dy, "┘")
             for i in range(1, dx):
-                self.set(self, x + i, y, "─")
-                self.set(self, x + i, y + dy, "─")
+                self.set(x + i, y, "─")
+                self.set(x + i, y + dy, "─")
             for i in range(1, dy):
-                self.set(self, x, y + i, "│")
-                self.set(self, x + dx, y + i, "│")
+                self.set(x, y + i, "│")
+                self.set(x + dx, y + i, "│")
         if title is not None:
             if alligncenter:
-                self.set(self, x + int(dx / 2) - int(len(title) / 2) - 1, y,
+                self.set(x + int(dx / 2) - int(len(title) / 2) - 1, y,
                          "┤" if not double else "╡")
-                self.set(self, x + int(dx / 2) + int(len(title) / 2), y, "├" if
+                self.set(x + int(dx / 2) + int(len(title) / 2), y, "├" if
                          not double else "╞")
-                self.set_string(self, x + int(dx / 2) - int(len(title) / 2),
+                self.set_string(x + int(dx / 2) - int(len(title) / 2),
                                 y, title)
             else:
-                self.set(self, x + 1, y, "┤" if not double else "╡")
-                self.set(self, x + len(title) + 2, y, "├" if not double else
+                self.set(x + 1, y, "┤" if not double else "╡")
+                self.set( x + len(title) + 2, y, "├" if not double else
                          "╞")
-                self.set_string(self, x + 2, y, title)
+                self.set_string(x + 2, y, title)
 
     def set_square(self, x, y, dx, dy, char):
         for i in range(dx):
             for j in range(dy):
-                self.set(self, x + i, y + j, char)
+                self.set(x + i, y + j, char)
 
     def set(self, x, y, value):
         try:
@@ -103,10 +103,10 @@ class Matrix:
 
     def set_string(self, x, y, chars):
         for i in range(len(chars)):
-            self.set(self, x + i, y, chars[i])
+            self.set(x + i, y, chars[i])
 
     def set_string_center(self, y, chars):
-        self.set_string(self, int(Terminal.get_columns() / 2 - len(chars) / 2),
+        self.set_string(int(Terminal.get_columns() / 2 - len(chars) / 2),
                         y, chars)
 
     def get_matrix(self):
