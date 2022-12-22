@@ -1,4 +1,4 @@
-__author__ = "7987847, Werner, 7347119, Fajst, 1234567, dalimeli"
+__author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 class BOT:
     def __init__(self, name, cards):
