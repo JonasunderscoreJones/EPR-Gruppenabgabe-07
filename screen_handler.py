@@ -44,13 +44,15 @@ def config_sequence(screen:Matrix):
     previous_question = ""
     question_no = 0
     for i in ['How many players are playing?','How many bots should be playing?', 'How many cards should be drawn per player?']:
-        input = ""
-        screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 4 + question_no), "                                                 ")
-        screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 2 + question_no), "                                                 ")
-        screen.set_string_center(int(Terminal.get_lines() /2 - 4 + question_no), previous_question + " " + config[question_no])
-        screen.set_string_center(int(Terminal.get_lines() /2 - 2 + question_no), i)
-        screen.set_frame(int(Terminal.get_columns() / 2 - 24), int(Terminal.get_lines() / 2 - 3 + question_no), 48, 2,double=True)
-        config[question_no + 1] = console_input(i, "[" + question_possible_asnwers[question_no] + "]", screen)
+        input = "-1"
+        while not int(question_possible_asnwers[question_no].split(" - ")[0]) <= int(input) <= int(question_possible_asnwers[question_no].split(" - ")[1]):
+            screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 4 + question_no), "                                                 ")
+            screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 2 + question_no), "                                                 ")
+            screen.set_string_center(int(Terminal.get_lines() /2 - 4 + question_no), previous_question + " " + config[question_no])
+            screen.set_string_center(int(Terminal.get_lines() /2 - 2 + question_no), i)
+            screen.set_frame(int(Terminal.get_columns() / 2 - 24), int(Terminal.get_lines() / 2 - 3 + question_no), 48, 2,double=True)
+            input = console_input(i, "[" + question_possible_asnwers[question_no] + "]", screen)
+        config[question_no] = input
         previous_question = i
         question_no += 1
         question_possible_asnwers[1] = f"{'0' if config[1] == '5' else '1'} - {5 - int(config[1])}"
