@@ -88,3 +88,4 @@ class PLAYER:
                 list of cards
         '''
         self.cards = cards
+        

@@ -98,8 +98,8 @@ class Matrix:
     def print(self):
         for i in range(self.lines):
             for j in range(self.columns):
-                print(self.matrix[i][j], end="")
-            print(end="" if i < self.lines - 1 else "\r")
+                print(self.matrix[i][j], end = "")
+            print(end = "" if i < self.lines - 1 else "\r")
 
     def set_string(self, x, y, chars):
         for i in range(len(chars)):
@@ -116,3 +116,4 @@ class Matrix:
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 self.set(self, x + j, y + i, matrix[i][j])
+                
