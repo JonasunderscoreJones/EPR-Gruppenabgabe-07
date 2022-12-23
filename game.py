@@ -93,3 +93,18 @@ if __name__ == '__main__':
     print(card_deck)
 
     print(deal_cards(card_deck, 5, 5))
+
+if __name__ == '__main__':
+    # Testcases
+    deck = create_cards()
+    print(deck)
+    print(deal_cards(create_cards(), deck, 5))
+    print(deal_cards(create_cards(), deck, 0))
+    try:
+        print(deal_cards(create_cards(), deck, 100))
+    except:
+        print('Exception')
+
+    print(compare_cards([{'rank': 'Ace', 'suit': 'Spades'}, {'rank': 'Ace', 'suit': 'Spades'}]), 'Spades')
+    print(compare_cards([{'rank': 'Ace', 'suit': 'Spades'}, {'rank': 'Ace', 'suit': 'Hearts'}]), 'Hearts')
+    print(compare_cards([{'rank': 'Ace', 'suit': 'Spades'}, {'rank': 'Ace', 'suit': 'Diamond'}]), 'Hearts')

@@ -247,4 +247,12 @@ class Matrix:
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 self.set(self, x + j, y + i, matrix[i][j])
+
+
+if __name__ == "__main__":
+    term = Terminal()
+    term.set_frame(0, 0, term.get_columns(), term.get_lines(), title="Test",
+                   alligncenter=True)
+    term.set_string_center(1, "Hello World!")
+    term.print()
                 

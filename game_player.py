@@ -83,4 +83,12 @@ class PLAYER:
                 list of cards
         '''
         self.cards = cards
-        
+
+if __name__ == "__main__":
+
+    import game
+    
+    player = PLAYER("Bot", 1, game.create_cards())
+    print(player.get_cards())
+    print(player.play_card())
+    print(player.get_cards())

@@ -136,4 +136,13 @@ class BOT:
 
     def __str__(self):
         return self.name
-    
+
+if __name__ == "__main__":
+
+    import game
+
+    # Create a bot
+    bot = BOT("Bot", 1, game.create_cards())
+    print(bot.get_cards())
+    print(bot.play_card())
+    print(bot.get_cards())

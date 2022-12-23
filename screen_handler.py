@@ -403,3 +403,16 @@ def stich_win_screen(screen:Matrix, winner, players:list, cards:list,
     draw_player_cards(screen, cards, players)
     screen.print()
     input()
+
+
+if __name__ == "__main__":
+    
+    # Create a new screen
+    screen = Matrix(Terminal.get_columns(), Terminal.get_lines())
+    screen.set_frame(0, 0, Terminal.get_columns() - 1,
+                     Terminal.get_lines() - 1, rounded=True, title="Welcome \
+to the game!")
+    screen.set_string_center(2, "Welcome to the game!")
+    screen.set_string_center(3, "Press ENTER to start the game...")
+    screen.print()
+    input()
