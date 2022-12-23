@@ -108,7 +108,7 @@ def config_sequence(screen:Matrix):
         config[question_no + 1] = input
         previous_question = i
         question_no += 1
-        question_possible_asnwers[1] = f"{'0' if config[1] == '5' else '1'} -\
+        question_possible_asnwers[1] = f"{'0' if config[1] == '5' else '2' if config[1] == '0' else '1'} -\
  {5 - int(config[1])}"
     return config
 
@@ -303,8 +303,14 @@ def player_interface(screen:Matrix, player:PLAYER, round_no:int, stich:int,
  {player.get_points()}")
     draw_player_cards(screen, player.get_cards())
     screen.print()
-    chosen_card = console_input("Choose a card by its number", "[1 - " +\
-        str(len(player.get_cards())) + "]", screen, fullscreen=True)
+    wrong_input = True
+    while wrong_input:
+        chosen_card = console_input("Choose a card by its number", "[1 - " +\
+            str(len(player.get_cards())) + "]", screen, fullscreen=True)
+        if chosen_card.isdigit():
+            if int(chosen_card) > 0 and int(chosen_card) <=\
+                len(player.get_cards()):
+                wrong_input = False
     return player.pop_card(int(chosen_card) - 1)
 
 def bot_interface(screen:Matrix, bot:BOT, round_no:int, stich:int):
@@ -341,10 +347,9 @@ def winner_screen(screen, winner, players:list):
     '''
     screen.refresh()
     screen.set_frame(int(Terminal.get_columns() / 2 - 25),
-                      int(Terminal.get_lines() / 2 - 10), 50, 20, rounded=True,
+                     int(Terminal.get_columns() / 2 - 25), 50, 20, rounded=True,
                       title=f"Player '{winner.get_name()}' won the game!")
-    screen.set_string_center(4, "Congratulations!")
-    screen.set_string_center(5, f"Player '{winner.get_name()}' won the game!")
+    screen.set_string_center(int(Terminal.get_columns() / 2), "Congratulations!")
     screen.print()
 
 def trumpf_screen(screen:Matrix, trumpf:str):
