@@ -347,10 +347,9 @@ def winner_screen(screen, winner, players:list):
     '''
     screen.refresh()
     screen.set_frame(int(Terminal.get_columns() / 2 - 25),
-                      int(Terminal.get_lines() / 2 - 10), 50, 20, rounded=True,
+                     int(Terminal.get_columns() / 2 - 25), 50, 20, rounded=True,
                       title=f"Player '{winner.get_name()}' won the game!")
-    screen.set_string_center(4, "Congratulations!")
-    screen.set_string_center(5, f"Player '{winner.get_name()}' won the game!")
+    screen.set_string_center(int(Terminal.get_columns() / 2), "Congratulations!")
     screen.print()
 
 def trumpf_screen(screen:Matrix, trumpf:str):
