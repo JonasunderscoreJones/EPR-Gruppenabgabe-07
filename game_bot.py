@@ -1,6 +1,10 @@
+'''EPR 07 Aufgabe 3'''
 __author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 class BOT:
+    '''
+    Bot class
+    '''
     def __init__(self, name, bot_number, cards):
         self.name = name
         self.cards = cards
@@ -17,7 +21,7 @@ class BOT:
                 card to play
         '''
         return self.cards.pop(0)
-    
+
     def add_points(self, points):
         '''
         Adds points to the bot
@@ -28,39 +32,7 @@ class BOT:
         self.points += points
 
     # Getters
-    
-    def get_points(self, played_cards):
-        '''
-        Calculates the points of the played cards
-        input:
-            - played_cards: list
-                list of cards that have been played already
-        output:
-            - points: int
-                points of the played cards
-        '''
-        points = 0
-        for card in played_cards:
-            if card['rank'] == 'Jack':
-                points += 2
-            elif card['rank'] == 'Queen':
-                points += 3
-            elif card['rank'] == 'King':
-                points += 4
-            elif card['rank'] == 'Ace':
-                points += 11
-        return points
-    
-    def get_trumpf(self, trumpf_color):
-        '''
-        Sets the trumpf color
-        input:
-            - trumpf_color: str
-                trumpf color
-        '''
-        self.trumpf = True
-        self.trumpf_color = trumpf_color
-    
+
     def get_trumpf_color(self):
         '''
         Returns the trumpf color
@@ -114,7 +86,7 @@ class BOT:
                 if the player is a bot
         '''
         return True
-    
+
     def get_bot_number(self):
         '''
         Returns the bot number

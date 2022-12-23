@@ -1,13 +1,17 @@
+'''EPR 07 Aufgabe 3'''
 __author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 class PLAYER:
+    '''
+    Player class
+    '''
     def __init__(self, name, cards):
         self.name = name
         self.cards = cards
         self.points = 0
         self.trumpf = False
         self.trumpf_color = None
-    
+
     def get_name(self):
         '''
         Returns the name of the player
@@ -25,16 +29,7 @@ class PLAYER:
                 if the player is a bot
         '''
         return False
-    
-    def get_cards(self):
-        '''
-        Returns the cards of the player
-        output:
-            - cards: list
-                list of cards of the player
-        '''
-        return self.cards
-    
+
     def pop_card(self, card:int):
         '''
         Removes a card from the players cards
@@ -52,7 +47,7 @@ class PLAYER:
                 list of cards of the player
         '''
         return self.cards
-    
+
     def add_points(self, points):
         '''
         Adds points to the player

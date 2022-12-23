@@ -1,13 +1,20 @@
+'''EPR 07 Aufgabe 3'''
 __author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 from random import randint
-from time import sleep
 
-RANKS = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+RANKS = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen',
+'King']
 SUITS = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 
 def create_cards():
+    '''
+    Creates a deck of cards
 
+    output:
+        - card_deck: list
+            list of cards
+    '''
     card_deck = []
 
     for suit in SUITS:
@@ -20,7 +27,7 @@ def create_cards():
 def deal_cards(card_deck:list, players:int, cards_per_player:int):
     '''
     Deals cards to players
-    
+
     input:
         - card_deck: list
             list of cards
@@ -35,12 +42,14 @@ def deal_cards(card_deck:list, players:int, cards_per_player:int):
     temp_cards = []
     for player in range(players):
         temp_cards.append([])
-        for card in range(cards_per_player):
-            temp_cards[player].append(card_deck.pop(randint(0, len(card_deck)-1)))
+        for _ in range(cards_per_player):
+            temp_cards[player].append(card_deck.pop(randint(0,
+                                                    len(card_deck)-1)))
     while len(temp_cards) < 5:
         temp_cards.append([])
 
-    return (temp_cards[0], temp_cards[1], temp_cards[2], temp_cards[3], temp_cards[4])
+    return (temp_cards[0], temp_cards[1], temp_cards[2], temp_cards[3],
+        temp_cards[4])
 
 
 def compare_cards(cards_to_compare:list, trumpf_color:str):
@@ -64,13 +73,15 @@ def compare_cards(cards_to_compare:list, trumpf_color:str):
     elif len(trumpf) > 1:
         winner = 0
         for j in trumpf:
-            if RANKS.index(cards_to_compare[j].get('rank')) > RANKS.index(cards_to_compare[winner].get('rank')):
+            if RANKS.index(cards_to_compare[j].get('rank')) > RANKS.index(
+                cards_to_compare[winner].get('rank')):
                 winner = j
         winner = j
     else:
         winner = 0
         for j in cards_to_compare:
-            if RANKS.index(j.get('rank')) > RANKS.index(cards_to_compare[winner].get('rank')):
+            if RANKS.index(j.get('rank')) > RANKS.index(
+                    cards_to_compare[winner].get('rank')):
                 winner = cards_to_compare.index(j)
                 print(winner, j, cards_to_compare)
 
