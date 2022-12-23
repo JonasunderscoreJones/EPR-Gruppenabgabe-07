@@ -52,7 +52,7 @@ Das Terminal würde dann in diesem speziellen Fall so aussehen:
 
 											Points of player a: 0										Trumpf: Diamonds ♦
 
-													1
+													  1
 												    ╔═══╗
 										        	║ ♠ ║
 												    ║ 5 ║
