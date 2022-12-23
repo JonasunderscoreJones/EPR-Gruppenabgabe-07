@@ -2,6 +2,7 @@ __author__ = "7987847, Werner, 7347119, Fajst, 7735965, Melikidze"
 
 from cmd_interface import Matrix, Terminal
 from time import sleep
+from random import randint
 
 import screen_handler
 import game
@@ -29,7 +30,7 @@ def main(first_time:bool=True, previous_config = None):
         screen.set_string_center(int(Terminal.get_lines() /2 + 4), "Your terminal currently has the size:")
         screen.set_string_center(int(Terminal.get_lines() /2 + 5), f"{Terminal.get_columns()}x{Terminal.get_lines()}")
         screen.set_string_center(int(Terminal.get_lines() /2 + 7), "If your terminal is not fullscreen or")
-        screen.set_string_center(int(Terminal.get_lines() /2 + 8), "at least 80x24, the game will pause")
+        screen.set_string_center(int(Terminal.get_lines() /2 + 8), "at least 80x28, the game will pause")
         screen.set_string_center(int(Terminal.get_lines() /2 + 9), "and display an error message until resolved")
         if screen_handler.console_input("Would you like to check out the rules of the game?", "[Y/n]", screen) in YES:
             # TODO: Show rules
@@ -43,36 +44,55 @@ def main(first_time:bool=True, previous_config = None):
     screen.refresh()
     screen.print()
 
-
-    card_deck = game.create_cards()
-    dealt_cards = game.deal_cards(card_deck, int(previous_config[1]) + int(previous_config[2]), int(previous_config[3]))
-
     players = []
     for i in range(0, int(previous_config[1])):
-        players.append(PLAYER(screen_handler.console_input(f'Name for Player {i + 1}', '', screen=screen), dealt_cards[i]))
+        players.append(PLAYER(screen_handler.console_input(f'Name for Player {i + 1}: In der kürze liegt die Würze (In short lies the spice :) )', '', screen=screen), []))
     for i in range(0, int(previous_config[2])):
-        players.append(BOT(f'Bot {i + 1}', i + 1, dealt_cards[len(previous_config[1]) + i]))
+        players.append(BOT(f'Bot {i + 1}', i + 1, []))
     
     screen.refresh()
 
     screen_handler.starting_screen(screen, players)
 
-    sleep(5)
+    sleep(1)
 
     screen.refresh()
 
     round_no = 0
 
-    while players[0].get_cards() != []:
-        round_no += 1
-        cards = []
+    max_turns = int(52 / len(players))
+    max_turns = 3
+
+    for turn in range(1, max_turns):
+        SUITS = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
+        SUITS_SYM = ["♠", "♥", "♦", "♣"]
+        trumpf_color = SUITS[randint(0, 3)]
+
+        screen_handler.trumpf_screen(screen, trumpf_color)
+        sleep(2)
+
+
+        card_deck = game.create_cards()
+        dealt_cards = game.deal_cards(card_deck, int(previous_config[1]) + int(previous_config[2]), turn)
+
         for player in players:
-            if player.is_bot():
-                cards.append(screen_handler.bot_interface(screen, player, round_no))
-                sleep(0.5)
-            else:
-                cards.append(screen_handler.player_interface(screen, player, round_no))
-        players[game.compare_cards(cards)].add_points(1)
+            player.set_cards(dealt_cards[players.index(player)])
+        
+        cards = []
+        for stiche in range(0, turn):
+            cards = []
+            for player in players:
+                if player.is_bot():
+                    cards.append(screen_handler.bot_interface(screen, player, turn, stiche + 1))
+                    sleep(0.5)
+                else:
+                    cards.append(screen_handler.player_interface(screen, player, turn, stiche + 1, trumpf_color, SUITS_SYM[SUITS.index(trumpf_color)]))
+            print(cards)
+            winner = game.compare_cards(cards, trumpf_color)
+            players[winner].add_points(1)
+
+            screen_handler.stich_win_screen(screen, players[winner], players, cards, trumpf_color, SUITS_SYM[SUITS.index(trumpf_color)])
+        
     
     # determine winner
     winner = players[0]

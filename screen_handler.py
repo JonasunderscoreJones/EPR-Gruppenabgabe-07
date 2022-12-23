@@ -24,12 +24,9 @@ def game_rules(screen:Matrix):
     screen.refresh()
     screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title="Game Rules")
     screen.set_string(2, int(Terminal.get_lines() /2 - 6), "How to play:")
-    screen.set_string(2, int(Terminal.get_lines() /2 - 4), "1. The player with the lowest trumpf card starts the game")
-    screen.set_string(2, int(Terminal.get_lines() /2 - 3), "2. The player has to play a card of the same suit as the first card")
-    screen.set_string(2, int(Terminal.get_lines() /2 - 2), "3. If the player does not have a card of the same suit, he can play any card")
-    screen.set_string(2, int(Terminal.get_lines() /2 - 1), "4. The player with the highest card of the same suit wins the round")
-    screen.set_string(2, int(Terminal.get_lines() /2), "5. The player with the most points wins the game")
-    screen.set_string(2, int(Terminal.get_lines() /2 + 1), "6. The player with the most points wins the game")
+    screen.set_string(2, int(Terminal.get_lines() /2 - 5), "1. The goal is to play the highest card.")
+    screen.set_string(2, int(Terminal.get_lines() /2 - 4), "2. The trumpf color outweights all other colors.")
+    screen.set_string(2, int(Terminal.get_lines() /2 - 3), "3. The player who wins the most amounts of tricks (Stiche) wins the game.")
     screen.set_string(2, int(Terminal.get_lines() /2 + 3), "Press ENTER key to continue...")
     screen.print()
     input()
@@ -39,24 +36,26 @@ def config_sequence(screen:Matrix):
     screen.refresh()
     screen.set_frame(int(Terminal.get_columns() / 2 - 25), int(Terminal.get_lines() / 2 - 10), 50, 20, rounded=True, title="Game Configuration")
     screen.set_string_center(int(Terminal.get_lines() /2 - 6), "Please answer the questions below:")
-    config = ['', '1', '1','1']
-    question_possible_asnwers = ['1 - 5', '', '']
+    config = ['', '1', '1']
+    question_possible_asnwers = ['1 - 5', '']
     previous_question = ""
     question_no = 0
-    for i in ['How many players are playing?','How many bots should be playing?', 'How many cards should be drawn per player?']:
-        input = "-1"
-        while not int(question_possible_asnwers[question_no].split(" - ")[0]) <= int(input) <= int(question_possible_asnwers[question_no].split(" - ")[1]):
+    for i in ['How many players are playing?','How many bots should be playing?']:
+        wrong_input = True
+        while wrong_input:
             screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 4 + question_no), "                                                 ")
             screen.set_string(int(Terminal.get_columns() / 2 - 24),int(Terminal.get_lines() /2 - 2 + question_no), "                                                 ")
             screen.set_string_center(int(Terminal.get_lines() /2 - 4 + question_no), previous_question + " " + config[question_no])
             screen.set_string_center(int(Terminal.get_lines() /2 - 2 + question_no), i)
             screen.set_frame(int(Terminal.get_columns() / 2 - 24), int(Terminal.get_lines() / 2 - 3 + question_no), 48, 2,double=True)
             input = console_input(i, "[" + question_possible_asnwers[question_no] + "]", screen)
-        config[question_no] = input
+            if input.isdigit():
+                if int(question_possible_asnwers[question_no].split(" - ")[0]) <= int(input) <= int(question_possible_asnwers[question_no].split(" - ")[1]):
+                    wrong_input = False
+        config[question_no + 1] = input
         previous_question = i
         question_no += 1
         question_possible_asnwers[1] = f"{'0' if config[1] == '5' else '1'} - {5 - int(config[1])}"
-        question_possible_asnwers[2] = f"1 - {str(int(52 / (int(config[1]) + int(config[2]))))}"
     return config
 
 
@@ -65,11 +64,6 @@ def starting_screen(screen:Matrix, players:list):
     screen.set_frame(int(Terminal.get_columns() / 2 - 25), int(Terminal.get_lines() / 2 - 10), 50, 20, rounded=True, title="Preparing...")
     screen.set_string_center(int(Terminal.get_lines() /2 - 6), "The game is starting...")
     screen.set_string_center(int(Terminal.get_lines() /2 - 4), "Here are the players:")
-    # screen.set_string_center(int(Terminal.get_lines() /2 - 3), players[0].get_name())
-    # screen.set_string_center(int(Terminal.get_lines() /2 - 2), players[1].get_name())
-    # screen.set_string_center(int(Terminal.get_lines() /2 - 1), players[2].get_name())
-    # screen.set_string_center(int(Terminal.get_lines() /2), players[3].get_name())
-    # screen.set_string_center(int(Terminal.get_lines() /2 + 1), players[4].get_name())
 
     for i in range(len(players)):
         screen.set_string_center(int(Terminal.get_lines() /2 - 3 + i), players[i].get_name())
@@ -131,7 +125,7 @@ def add_bot_font(screen:Matrix, bot:int):
     screen.print()
 
     
-def draw_player_cards(screen:Matrix, cards:list):
+def draw_player_cards(screen:Matrix, cards:list, players = None):
     card1 = "╔═══╗"
     card2 = "║ X ║"
     card3 = "║ X ║"
@@ -169,28 +163,34 @@ def draw_player_cards(screen:Matrix, cards:list):
             card3 = "║10 ║"
         else:
             card3 = f"║ {card.get('rank')} ║"
-        
-        screen.set_string(3 + x, y - 1, "  " + str(i))
+        if players != None:
+            screen.set_string(3 + x, y - 1, "  " + players[i].get_name() + ": " + str(players[i].get_points()) + " points")
+        else:
+            screen.set_string(3 + x, y - 1, "  " + str(i + 1))
         screen.set_string(3 + x, y, card1)
         screen.set_string(3 + x, y + 1, card2)
         screen.set_string(3 + x, y + 2, card3)
         screen.set_string(3 + x, y + 3, card4)
 
+        if players != None:
+            x += 16
         x += 6
     
 
 
-def player_interface(screen:Matrix, player:PLAYER, round_no:int):
+def player_interface(screen:Matrix, player:PLAYER, round_no:int, stich:int, trumpf:str, trumpf_sym:str):
     screen.refresh()
-    screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title=f"Player '{player.get_name()}' is playing in round NO. {round_no}")
+    screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title=f"Player '{player.get_name()}' is playing in round NO. {round_no} and stich NO. {stich}")
+    screen.set_string(Terminal.get_columns() - len(trumpf + "          ") - 2, 2, "Trumpf: " + trumpf + " " + trumpf_sym)
+    screen.set_string(2, 2, f"Points of player {player.get_name()}: {player.get_points()}")
     draw_player_cards(screen, player.get_cards())
     screen.print()
-    chosen_card = console_input("Choose a card by its number", str(len(player.get_cards())), screen, fullscreen=True)
-    return player.pop_card(int(chosen_card))
+    chosen_card = console_input("Choose a card by its number", "[1 - " + str(len(player.get_cards())) + "]", screen, fullscreen=True)
+    return player.pop_card(int(chosen_card) - 1)
 
-def bot_interface(screen:Matrix, bot:BOT, round_no:int):
+def bot_interface(screen:Matrix, bot:BOT, round_no:int, stich:int):
     screen.refresh()
-    screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title=f"Bot {bot.get_name()} is playing in round NO. {round_no}")
+    screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title=f"Bot {bot.get_name()} is playing in round NO. {round_no}, stich NO. {stich}")
     add_bot_font(screen, bot.get_bot_number())
     screen.print()
     return bot.play_card()
@@ -201,3 +201,22 @@ def winner_screen(screen, winner, players:list):
     screen.set_string_center(4, "Congratulations!")
     screen.set_string_center(5, f"Player '{winner.get_name()}' won the game!")
     screen.print()
+
+def trumpf_screen(screen:Matrix, trumpf:str):
+    screen.refresh()
+    screen.set_frame(int(Terminal.get_columns() / 2 - 25), int(Terminal.get_lines() / 2 - 10), 50, 20, rounded=True, title="Trumpf")
+    screen.set_string_center( int(Terminal.get_lines() / 2 - 1), "The trumpf is:")
+    screen.set_string_center( int(Terminal.get_lines() / 2), trumpf)
+    screen.print()
+
+def stich_win_screen(screen:Matrix, winner, players:list, cards:list, trumpf:str, trumpf_sym:str):
+    screen.refresh()
+    screen.set_frame(0, 0, Terminal.get_columns() - 1, Terminal.get_lines() - 1, rounded=True, title=f"Player '{winner.get_name()}' won the trick!")
+    screen.set_frame(int(Terminal.get_columns() / 2 - 25), 19, 50, 4, double=True)
+    screen.set_string_center(20, "Congratulations!")
+    screen.set_string_center(21, f"Player '{winner.get_name()}' won the trick!")
+    screen.set_string_center(22, "Press ENTER to continue...")
+    screen.set_string(Terminal.get_columns() - len(trumpf + "          ") - 2, 2, "Trumpf: " + trumpf + " " + trumpf_sym)
+    draw_player_cards(screen, cards, players)
+    screen.print()
+    input()

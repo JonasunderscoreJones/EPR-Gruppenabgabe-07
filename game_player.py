@@ -70,3 +70,21 @@ class PLAYER:
                 points of the player
         '''
         return self.points
+
+    def add_card(self, card):
+        '''
+        Adds a card to the players cards
+        input:
+            - card: dict
+                card to add
+        '''
+        self.cards.append(card)
+
+    def set_cards(self, cards):
+        '''
+        Sets the cards of the player
+        input:
+            - cards: list
+                list of cards
+        '''
+        self.cards = cards
