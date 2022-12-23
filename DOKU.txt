@@ -1,0 +1,102 @@
+7987847, Werner, 7347119, Fajst, 7735965, Melikidze
+
+Mit diesem Programm kann man das Kartenspiel "Wizard" spielen.
+Es wurde in Python 3.10 entwickelt und wird daher empfohlen.
+
+Beim Sart des Programms erscheinen im Terminal die Spielanweisungen, ebenso die empfohlene Terminal Größe, für den MAXIMALEN Spaß.
+Der User kann entscheiden, ob er die Spielregeln angezeigt bekommen möchte oder nicht. Falls ja kann er "y" in die Konsole schreiben. Nur Enter drücken genügt auch.
+Die Regeln sehen wiefolgt aus:
+						How to play:
+						1. The goal is to play the highest card.
+						2. The trumpf color outweights all other colors.
+						3. The player who wins the most amounts of tricks (Stiche) wins the game.
+
+
+						Press ENTER key to continue...
+
+Durch das drücken von ENTER, "bestätigt" man die Regeln.
+
+Entscheidet sich der User für "n", dann wird dieses übersprungen und man gelangt zum Game configurator.
+
+Beim Game Configurator wird der User gefragt, mit wie vielen Spielern er das Spiel spielen möchte. Er kann sich zwischen 1-5 Spielern entscheiden.
+5 Spieler sind inkl. BOTS (d.h. z.B. 3 Spieler, 2 BOTS).
+Eingaben außerhalb dieser Range werden Abgefangen.
+Die Abfrage sieht wiefolgt aus:	
+						How many players are playing?
+						→ [1 - 5]
+
+Nach der Eingabe der Spieleranzahl, kann man zusätzlich BOTS hinzufügen. BOTS legen immer ihre erste Karte, die sie auf der Hand haben.
+BOTS füllen die Menge der Spieler auf maximal 5. Es kann ebenso nur mit BOTS gespielt werden.
+Diese Abfrage sieht wiefolgt aus:
+						How many bots should be playing?
+						→ [1 - 2] (Wenn z.B. bereits 3 Spieler ausgewählt wurden, dann können maximal nur 2 BOTS hinzugefügt werden, weil diese die Spieler auf maximal 5 ergänzen.
+
+Eingaben außerhalb der Range werden ebenfalls abgefangen.
+
+Nun können sich die Spieler einen Namen aussuchen. (In der Kürze liegt die Würze)
+
+In dem Spiel bekommen alle Spieler Karten, der Runde entsprechend. D.h. in Runde 4 bekommen alle Spieler 4 random Karten etc.
+
+Zu Beginn der Runde wird die Trumpf Karte eingeblendet. Diese wird immer random zu beginn einer neuen Runde ermittelt.
+Genau so bekommen die Spieler immer random Karten auf die Hand.
+
+Nun kann der Spieler seine Karte aussuchen und diese auch legen.
+Die Karten werden numeriert, d.h. um die erste Karte zu legen, schreibt man 1 in die Konsole etc.
+
+Ganz oben in der Mitte des Terminals wird angezeigt, welcher Spieler dran ist. Ebenso in welcher Runde man ist, und der wievielte Stich es in der jetzigen Runde ist.
+Etwas drunter, Rechts sieht man, was die Trumpffarbe für diese Runde ist.
+Links werden die Punkte des aktuellen Spielers angezeigt und darunter die Karten auf der Hand.
+
+Das Terminal würde dann in diesem speziellen Fall so aussehen:
+															Player 'a' is playing in round NO. 1 and trick NO. 1
+
+											Points of player a: 0										Trumpf: Diamonds ♦
+
+													1
+												    ╔═══╗
+										                ║ ♠ ║
+												    ║ 5 ║
+												    ╚═══╝
+
+
+											Choose a card by its number
+											→ [1 - 1]
+
+Legen alle Spieler deren Karten, gewinnt den Stich derjenige, mit der Höheren Karte. Trumpf überwiegt jedoch, egal ob die gelegte Karte höher ist, als die Trumpffarbene Karte.
+Am Ende eines Zyklus (jeder legt eine Karte in einer runde) wird angezeigt, welcher Spieler den Stich gewonnen hat. Ebenso werden die gelegten Karten der Spieler/BOTS angezeigt,
+und wieviele Punkte diese haben:
+						a: 1 points           a: 0 points           s: 1 points           Bot 1: 1 points       Bot 2: 0 points
+						╔═══╗                 ╔═══╗                 ╔═══╗                 ╔═══╗                 ╔═══╗
+						║ ♠ ║                 ║ ♣ ║                 ║ ♣ ║                ║ ♥ ║                 ║ ♣ ║
+						║ 5 ║                 ║10 ║                 ║ 3 ║                 ║ 2 ║                 ║ 7 ║
+						╚═══╝                 ╚═══╝                 ╚═══╝                 ╚═══╝                 ╚═══╝
+
+
+										╔═════════════════════════════════════════════════╗
+										║                Congratulations!                 ║
+										║          Player 'Bot 2' won the trick!          ║
+										║           Press ENTER to continue...            ║
+										╚═════════════════════════════════════════════════╝
+Diese Anzeige bleibt, bis der User ENTER drückt.
+
+
+Wenn BOTS an der Reihe sind, dann sieht es z.B. so aus:
+										
+											$$$$$$$\             $$\          
+											$$  __$$\            $$ |         
+    											$$ |  $$ | $$$$$$\ $$$$$$\        
+    											$$$$$$$\ |$$  __$$\\_$$  _|       
+    											$$  __$$\ $$ /  $$ | $$ |         
+   											$$ |  $$ |$$ |  $$ | $$ |$$\      
+    											$$$$$$$  |\$$$$$$  | \$$$$  |    
+    											\_______/  \______/   \____/     
+
+
+Am Ende des gesamten Spiels erscheint dieser Screen:
+										Congratulations!
+									Player '<Player>' won the game!
+
+									Would you like to play again?
+									→ [Y/n]
+
+Der User hat die Möglichkeit, das Spiel erneut zu spielen, indem er y in die Konsole eingibt oder ENTER drückt.
