@@ -296,7 +296,7 @@ def player_interface(screen:Matrix, player:PLAYER, round_no:int, stich:int,
     screen.set_frame(0, 0, Terminal.get_columns() - 1,
                      Terminal.get_lines() - 1, rounded=True, title=f"Player \
  '{player.get_name()}' is playing in round NO. \
- {round_no} and stich NO. {stich}")
+ {round_no} and trick NO. {stich}")
     screen.set_string(Terminal.get_columns() - len(trumpf + "          ") - 2,
                       2, "Trumpf: " + trumpf + " " + trumpf_sym)
     screen.set_string(2, 2, f"Points of player {player.get_name()}: \
@@ -323,7 +323,7 @@ def bot_interface(screen:Matrix, bot:BOT, round_no:int, stich:int):
     screen.refresh()
     screen.set_frame(0, 0, Terminal.get_columns() - 1,\
         Terminal.get_lines() - 1, rounded=True, title=f"Bot {bot.get_name()} \
- is playing in round NO. {round_no}, stich NO. {stich}")
+ is playing in round NO. {round_no}, trick NO. {stich}")
     add_bot_font(screen, bot.get_bot_number())
     screen.print()
     return bot.play_card()
