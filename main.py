@@ -76,7 +76,7 @@ def main(first_time:bool=True, previous_config = None):
     for i in range(0, int(previous_config[1])):
         players.append(PLAYER(screen_handler.console_input(
             f'Name for Player {i + 1}: In der kürze liegt die Würze \
-                (In short lies the spice :) )', '', screen=screen), []))
+(In short lies the spice :) )', '', screen=screen), []))
     for i in range(0, int(previous_config[2])):
         players.append(BOT(f'Bot {i + 1}', i + 1, []))
 
