@@ -16,7 +16,7 @@ def create_cards():
             list of cards
     '''
     card_deck = []
-
+    # add every combination of suit and rank to the deck
     for suit in SUITS:
         for rank in RANKS:
             card = {'rank': rank, 'suit': suit}
